@@ -21,6 +21,9 @@ class App extends React.Component {
         { name: 'name 3', artist: 'artist 3', album: 'album 3', id: 3 }
       ]
     }
+
+    this.addTrack = this.addTrack.bind(this);
+    this.removeTrack = this.removeTrack.bind(this);
   }
 
   //method called addTrack that accepts a track argument
@@ -36,6 +39,20 @@ class App extends React.Component {
     this.setState({ playlistTracks: tracks });
   }
 
+  // Filters tracks that already are on the playlist
+  // Uses the track’s id property to filter it out of playlistTracks
+  // Sets the new state of the playlist
+  removeTrack(track) {
+    const newPlaylistTracks = this.state.playlistTracks.filter(
+      savedTrack => savedTrack.id !== track.id
+    );
+
+    this.setState({
+      playlistTracks: newPlaylistTracks
+    });
+  }
+
+
 
   render() {
     return (
@@ -44,8 +61,8 @@ class App extends React.Component {
         <div className="App">
           <SearchBar />
           <div className="App-playlist">
-            <SearchResults searchResults={this.state.searchResults} />
-            <Playlist playlistName={this.state.playlistName} playlistTracks={this.state.playlistTracks} />
+            <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrack} />
+            <Playlist playlistName={this.state.playlistName} playlistTracks={this.state.playlistTracks} onRemove={this.props.removeTrack} />
           </div>
         </div>
       </div>
