@@ -2,10 +2,21 @@ import React from 'react';
 import './Playlist.css';
 import TrackList from '../../Components/TrackList/TrackList';
 
-// faudra ajouter <TrackList /> ultérieurement
+
 
 class Playlist extends React.Component {
-    state = {}
+
+    constructor(props) {
+        super(props);
+        this.handleNameChange = this.handleNameChange.bind(this);
+    }
+
+    //The method should accept an event that is triggered by an onChange attribute on <input> element.  
+    handleNameChange(event) {
+        // call .onNameChange() with the event target’s value (from the <input> element).
+        this.props.onNameChange(event.target.value);
+    }
+
     render() {
         return (
 
@@ -16,9 +27,10 @@ class Playlist extends React.Component {
                     onAdd={this.props.onAdd}
                     onRemove={this.props.onRemove}
                     isRemoval={true}
+                    onChange={this.handleNameChange}
                 />
 
-                <button className="Playlist-save">SAVE TO SPOTIFY</button>
+                <button className="Playlist-save" onClick={this.props.onSave}>SAVE TO SPOTIFY</button>
             </div>
         );
     }
