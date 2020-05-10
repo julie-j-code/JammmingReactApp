@@ -3,6 +3,7 @@ import './App.css';
 import SearchBar from '../../Components/SearchBar/SearchBar';
 import SearchResults from '../../Components/SearchResults/SearchResults';
 import Playlist from '../../Components/Playlist/Playlist';
+import Spotify from '../../util/Spotify.js';
 
 
 class App extends React.Component {
@@ -26,6 +27,7 @@ class App extends React.Component {
     this.removeTrack = this.removeTrack.bind(this);
     this.updatePlaylistName = this.updatePlaylistName.bind(this);
     this.savePlaylist = this.savePlaylist.bind(this);
+    this.search = this.search.bind(this);
   }
 
   //method called addTrack that accepts a track argument
@@ -60,8 +62,30 @@ class App extends React.Component {
   }
 
 
+  // after importing Spotify 
+  // update the .savePlaylist() method to call Spotify.savePlaylist().
   savePlaylist() {
     const trackURIs = this.state.playlistTracks.map(track => track.uri);
+    Spotify.savePlaylist(this.state.playlistName, trackURIs);
+    // After you call Spotify.savePlaylist(),
+    // reset the state of playlistName to 'New Playlist' 
+    // and playlistTracks to an empty array.
+    this.setState({
+      searchResults: []
+    });
+    this.updatePlaylistName("New Playlist");
+    console.info(trackURIs);
+  }
+
+
+
+  // after importing Spotify update the .search() method with the Spotify.search() method.
+  search(term) {
+    Spotify.search(term).then(searchResults =>
+      // Update the state of searchResults with the value resolved from Spotify.search()‘s promise
+      this.setState({
+        searchResults: searchResults
+      }));
   }
 
 
@@ -70,7 +94,7 @@ class App extends React.Component {
       <div>
         <h1>Ja<span className="highlight">mmm</span>ing</h1>
         <div className="App">
-          <SearchBar />
+          <SearchBar onSearch={this.search} />
           <div className="App-playlist">
             <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrack} />
             <Playlist
