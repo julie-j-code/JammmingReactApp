@@ -65,8 +65,8 @@ class App extends React.Component {
   // after importing Spotify 
   // update the .savePlaylist() method to call Spotify.savePlaylist().
   savePlaylist() {
-    const trackURIs = this.state.playlistTracks.map(track => track.uri);
-    Spotify.savePlaylist(this.state.playlistName, trackURIs);
+    const trackUris = this.state.playlistTracks.map(track => track.uri);
+    Spotify.savePlaylist(this.state.playlistName, trackUris);
     // After you call Spotify.savePlaylist(),
     // reset the state of playlistName to 'New Playlist' 
     // and playlistTracks to an empty array.
@@ -74,7 +74,7 @@ class App extends React.Component {
       searchResults: []
     });
     this.updatePlaylistName("New Playlist");
-    console.info(trackURIs);
+    console.info(trackUris);
   }
 
 

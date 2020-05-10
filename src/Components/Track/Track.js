@@ -19,6 +19,7 @@ class Track extends React.Component {
         return this.props.onRemove(this.props.track);
     }
 
+
     renderAction() {
         if (this.props.isRemoval) {
             return (
@@ -32,10 +33,6 @@ class Track extends React.Component {
 
     }
 
-
-
-
-    //<!-- + or - will go here -->
 
 
     render() {
